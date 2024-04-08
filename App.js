@@ -1,11 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, Modal, TouchableOpacity, View } from "react-native";
 import { useEffect, useMemo, useState } from "react";
 
 var mainGameArray = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
@@ -26,7 +20,6 @@ export default function App() {
     setGameArray(newBlocks);
     currentPlayer = "X";
     isOver = false;
-    
   };
 
   //Winner check logic
@@ -180,6 +173,44 @@ export default function App() {
           Play Again
         </Text>
       </TouchableOpacity>
+      <Modal visible={isOver}>
+        <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+          {isOver ? (
+            <Text
+              style={
+                currentPlayer === "X" ? styles.xPlayerText : styles.oPlayerText
+              }
+            >
+              {currentPlayer} won
+            </Text>
+          ) : (
+            <Text
+              style={
+                currentPlayer === "X" ? styles.xPlayerText : styles.oPlayerText
+              }
+            >
+              {currentPlayer}'s turn
+            </Text>
+          )}
+          <TouchableOpacity
+            style={{
+              width: 300,
+              height: 30,
+              borderWidth: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 2,
+            }}
+            onPress={() => start()}
+          >
+            <Text
+              style={{ fontSize: 15, fontWeight: "600", fontFamily: "Roboto" }}
+            >
+              Play Again
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
